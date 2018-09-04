@@ -1,6 +1,6 @@
 include ../Rules.make
 
-LIBS = -lacw_mpi -ldsp -lvmm -lpthread
+LIBS = -lacw_mpi -ldsp -lvmm -lgtest -lpthread
 
 ifeq ($(DEBUG),0)
   CFLAGS 	+= -O2
@@ -8,10 +8,11 @@ else
   CFLAGS 	+= -O0 -g3
 endif
 
-BIN = sample_audio
+BIN = API_audio
 
 SRCS = $(wildcard *.c)
-OBJS	= $(SRCS:%.c=%.o)
+SRCS += $(wildcard ../*.c)
+OBJS	= $(SRCS:%.c=%.o)  
 DEPENDS	= $(subst .o,.d,$(OBJS))
 
 all: $(BIN) install
@@ -25,7 +26,7 @@ install:
 
 clean:
 	rm -f $(BIN)
-	rm -f *.o *.d
+	rm -f *.o *.d ../*.o ../*.d
 	rm -f ../common/*.o ../common/*.d
 
 ifneq "$(MAKECMDGOALS)" "clean"

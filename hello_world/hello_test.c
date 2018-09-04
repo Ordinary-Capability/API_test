@@ -29,11 +29,12 @@ public:
 
 TEST_F(hello_test, hello001)
 {
+    /*
     if (RETURN_OK == FH_AC_Init()){
         printf("Audio init successfully.\n");
     }else{
         printf("Audio init fail\n");
-    }
+    }*/
     printf("hello world!\n");
 }
 
