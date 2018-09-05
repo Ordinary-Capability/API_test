@@ -7,6 +7,7 @@ CROSS_COMPILE ?= arm-fullhan-linux-uclibcgnueabi-
 CC := $(CROSS_COMPILE)g++
 
 SDK_INC_DIR = $(SAMPLE_TOP_DIR)/../include
+SAMPLE_COMMON_INC_DIR = $(SAMPLE_TOP_DIR)/../demo/common
 LIB_PATH = $(SAMPLE_TOP_DIR)/../lib
 
 ifeq ($(STATIC),1)
