@@ -1,6 +1,6 @@
 include ../Rules.make
 
-LIBS = -ldbi -ldci -ldsp -lisp -lispcore -ladvapi -lvmm -ljxf22_mipi -lpthread -lvlcview -lmipi -lrt -lgtest
+LIBS = -ladvapi -ldbi -ldci -ldsp -lisp -lispcore  -lvmm -ljxf22_mipi -lpthread -lvlcview -lmipi -lrt -lgtest
 
 ifeq ($(DEBUG),0)
   CFLAGS 	+= -O2
@@ -34,6 +34,7 @@ ifneq "$(MAKECMDGOALS)" "clean"
 endif
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	#$(CC) $(CFLAGS) -c -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	$(CC) $(CFLAGS) -c -o "$@" "$<"
 
 .PHONY: clean
