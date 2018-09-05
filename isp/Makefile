@@ -1,6 +1,6 @@
 include ../Rules.make
 
-LIBS = -lisp -lispcore -ldsp -lvmm -lgtest -lpthread
+LIBS = -ldbi -ldci -ldsp -lisp -lispcore -ladvapi -lvmm -ljxf22_mipi -lpthread -lvlcview -lmipi -lrt -lgtest
 
 ifeq ($(DEBUG),0)
   CFLAGS 	+= -O2

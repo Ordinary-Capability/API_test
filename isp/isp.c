@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include "gtest/gtest.h"
-#include "isp/isp_api.h"
-#include "isp/isp_common.h"
-#include "isp/isp_func_def.h"
 
+#include "isp/isp_common.h"
+#include "isp/isp_api.h"
+#include "isp/isp_enum.h"
+#include "isp/isp_func_def.h"
 
 
 class isp : public testing::Test { 
@@ -29,7 +30,8 @@ public:
 
 TEST_F(isp, isp001)
 {
-    //ASSERT_EQ(FH_RET_OK, API_ISP_MemInit(768, 432));
+    ASSERT_EQ(FH_RET_OK, API_ISP_MemInitEx(4));
+    //ASSERT_EQ(0, sample_isp_init());
 
 }
 
