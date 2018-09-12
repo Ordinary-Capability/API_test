@@ -16,10 +16,10 @@ else
 SDK_LIB_DIR = $(LIB_PATH)/dynamic
 endif
 
-INCLUDES = -I$(SDK_INC_DIR) -I$(SAMPLE_TOP_DIR)/include -I$(SAMPLE_COMMON_INC_DIR) -I$(SDK_INC_DIR_GTEST)
+INCLUDES = -I$(SDK_INC_DIR) -I$(SAMPLE_TOP_DIR) -I$(SAMPLE_TOP_DIR)/include -I$(SAMPLE_COMMON_INC_DIR) -I$(SDK_INC_DIR_GTEST)
 
-#CFLAGS = -Wall -fpermissive $(INCLUDES)
-CFLAGS = -Wall $(INCLUDES)
+CFLAGS = -Wall -fpermissive $(INCLUDES)
+#CFLAGS = -Wall $(INCLUDES)
 LDFLAGS = -L$(SDK_LIB_DIR) -L$(SAMPLE_TOP_DIR)/lib
 SDK_LIBS = -ldbi -ldci -ldsp -lisp -lispcore -ladvapi -lvmm
 
