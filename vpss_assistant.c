@@ -140,7 +140,6 @@ void vpss_assistant()
      step  1: init media platform
     ******************************************/
     ret = FH_SYS_Init();
-    printf("VPSS init...\n");
     if (ret != RETURN_OK)
     {
         printf("Error: FH_SYS_Init failed with %d\n", ret);
@@ -153,7 +152,6 @@ void vpss_assistant()
     vi_pic.vi_size.u32Width = VIDEO_INPUT_WIDTH;
     vi_pic.vi_size.u32Height = VIDEO_INPUT_HEIGHT;
     ret = FH_VPSS_SetViAttr(&vi_pic);
-    printf("VPSS set vi attr...\n");
     if (ret != RETURN_OK)
     {
         printf("Error: FH_VPSS_SetViAttr failed with %d\n", ret);
@@ -168,7 +166,6 @@ void vpss_assistant()
         printf("Error: FH_VPSS_Enable failed with %d\n", ret);
         goto err_exit;
     }
-    printf("vpss enable...\n");
 
     /******************************************
      step  4: configure vpss channels
@@ -198,7 +195,6 @@ void vpss_assistant()
 #if USE_H265
         FH_VPSS_SetVOMode(i, VPU_VOMODE_SCAN);
 #endif
-        printf("VPSS assistant start successfullt.");
 
 //        /******************************************
 //         step  6: create venc channel
@@ -339,9 +335,9 @@ void vpss_assistant()
     /******************************************
      step  14: exit process
     ******************************************/
+    printf("VPSS assistant start successfullt.\n");
     while (!g_stop_running){
         usleep(1000000);
-        printf("123");
     }
 err_exit:
 //    sample_vlcview_exit();

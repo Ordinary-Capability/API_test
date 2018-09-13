@@ -75,7 +75,6 @@ TEST_F(isp, isp001)
     fread(isp_param_buff, 1, u32BinSize, param_file);
     fclose(param_file);
     ASSERT_EQ(0, API_ISP_LoadIspParam(isp_param_buff));
-    //ASSERT_EQ(CHAN_ERR, API_ISP_Run());
     ASSERT_EQ(0, API_ISP_Run());
     ASSERT_EQ(0, API_ISP_Pause());
     ASSERT_EQ(0, API_ISP_Resume());
@@ -83,21 +82,4 @@ TEST_F(isp, isp001)
     ASSERT_EQ(0, API_ISP_Run());
     ASSERT_EQ(0, API_ISP_Exit());
 }
-
-TEST_F(isp, isp002)
-{
-    /*
-    FH_UINT32 u32BinAddr, u32BinSize;
-
-    ASSERT_EQ(FH_RET_OK, API_ISP_GetBinAddr(&u32BinAddr, &u32BinSize));
-    printf("BinAddr: 0x%x, BinSize: 0x%x\n", u32BinAddr, u32BinSize);
-    */
-    
-}
-
-TEST_F(isp, isp003)
-{
-//    ASSERT_EQ(FH_RET_OK, API_ISP_Pause());    
-}
-
 
