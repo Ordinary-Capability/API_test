@@ -1,7 +1,23 @@
-all:
+
+UNITY_ROOT = ../Unity
+RUBY = ruby $(UNITY_ROOT)/auto/generate_test_runner.rb
+
+test_origin_c = src/hello_world.c
+test_origin_c += src/111.c
+
+test_runner_c = $(test_origin_c:%.c=%_runner.c)
+
+all: $(test_runner_c) build_bin
+
+%_runner.c: %.c 
+	$(RUBY) "$<" "$@" 
+
+build_bin:
 	@scons -j16 --buildlib=libkernel
 	@scons -j16 --buildlib=libdriver
 	@scons -j16
+
+
 
 menuconfig:
 	@scons --menuconfig
