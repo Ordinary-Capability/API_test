@@ -22,6 +22,8 @@
 #ifdef __WIN32__
 #define UNITY_INCLUDE_SETUP_STUBS
 #endif
+#include <rtdef.h>
+#include <rtthread.h>
 #include "unity.h"
 #ifndef UNITY_EXCLUDE_SETJMP_H
 #include <setjmp.h>
@@ -63,7 +65,11 @@ void resetTest(void)
 
 
 /*=======MAIN=====*/
+#ifdef RT_USING_FINSH
+int helloworld()
+#else
 int main(void)
+#endif
 {
   suite_setup();
   UnityBegin("hello_world.c");
@@ -71,3 +77,7 @@ int main(void)
 
   return suite_teardown(UnityEnd());
 }
+#ifdef RT_USING_FINSH
+#include <finsh.h>
+FINSH_FUNCTION_EXPORT(helloworld, helloworld());
+#endif

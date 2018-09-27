@@ -1,0 +1,30 @@
+Import('rtconfig')
+import os
+from building import *
+
+Import('SDK_ROOT')
+Import('RTT_PLATFORM_ROOT')
+
+API_TEST_DIR = os.path.join(SDK_ROOT, "../../app/API_test")
+
+if RTT_PLATFORM_ROOT != '':
+    path_inc = [SDK_ROOT + '/include']
+else:
+    path_inc = [SDK_ROOT + '/dsp/include']
+    path_inc += [SDK_ROOT + '/dsp/include/dsp']
+    path_inc += [SDK_ROOT + '/dsp/include/types']
+    path_inc += [SDK_ROOT + '/isp/include/isp']
+    path_inc += [SDK_ROOT + '/isp/include/di']
+
+path_inc += [SDK_ROOT]
+
+path_inc += ["../Unity/src"]
+
+#src	= Glob('*.c')
+src = [API_TEST_DIR + "/Unity/src/unity.c", "hello_world.c", "hello_world_runner.c"]
+#src = ["/opt/workspace/FH8856_RT_V1.0-RC1_20180904/app/API_test/Unity/src/unity.c", "hello_world.c", "hello_world_runner.c"]
+group = DefineGroup('hello', src, depend = ['RT_USING_HELLOWORLD'], LOCAL_CPPPATH = path_inc)
+
+
+print ("123= " + API_TEST_DIR )
+Return('group')

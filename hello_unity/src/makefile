@@ -3,7 +3,7 @@ CROSS_COMPILE ?= arm-fullhan-linux-uclibcgnueabi-
 C_COMPILER = $(CROSS_COMPILE)gcc
 
 
-UNITY_ROOT = ../Unity
+UNITY_ROOT = ../../Unity
 
 CLEANUP = rm -fr
 
