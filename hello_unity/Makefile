@@ -3,7 +3,6 @@ UNITY_ROOT = ../Unity
 RUBY = ruby $(UNITY_ROOT)/auto/generate_test_runner.rb
 
 test_origin_c = src/hello_world.c
-test_origin_c += src/111.c
 
 test_runner_c = $(test_origin_c:%.c=%_runner.c)
 

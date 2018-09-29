@@ -4,7 +4,12 @@
 #   [Released under MIT License. Please refer to license.txt for details]
 # ==========================================
 
-File.expand_path(File.join(File.dirname(__FILE__), 'colour_prompt'))
+$foo = File.expand_path(File.join(File.dirname(__FILE__), 'colour_prompt'))
+if $foo.include?("/app/")
+    $entry_name = File.basename(ARGV[0], ".c")
+else
+    $entry_name = "main"
+end
 
 class UnityTestRunnerGenerator
   def initialize(options = nil)
@@ -29,7 +34,7 @@ class UnityTestRunnerGenerator
       mock_suffix: '',
       setup_name: 'setUp',
       teardown_name: 'tearDown',
-      main_name: 'main', # set to :auto to automatically generate each time
+      main_name: "#$entry_name", # set to :auto to automatically generate each time
       main_export_decl: '',
       cmdline_args: false,
       use_param_tests: false
@@ -381,6 +386,14 @@ class UnityTestRunnerGenerator
     output.puts('  CMock_Guts_MemFreeFinal();') unless used_mocks.empty?
     output.puts("  return suite_teardown(UnityEnd());")
     output.puts('}')
+
+    if $foo.include?("/app/") #RTOS paltform 
+        output.puts("#ifdef RT_USING_FINSH")
+        output.puts("#include <finsh.h>")
+        output.puts("FINSH_FUNCTION_EXPORT(#$entry_name, #$entry_name());")
+        output.puts("#endif")
+        output.puts()
+    end
   end
 
   def create_h_file(output, filename, tests, testfile_includes, used_mocks)
