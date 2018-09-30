@@ -14,6 +14,10 @@ void tearDown(void)
 
 void test_helloworld(void)
 {
-    printf("Hello world.\n");
+#ifdef RT_USING_FINSH
+    printf("Hello rtos.\n");
+#else
+    printf("Hello linux.\n");
+#endif
     }
 
