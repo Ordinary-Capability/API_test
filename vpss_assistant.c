@@ -9,12 +9,15 @@
 #include "dsp/fh_system_mpi.h"
 #include "dsp/fh_vpu_mpi.h"
 #include "sample_common_isp.h"
-#include "libvlcview.h"
 #include "dbi/dbi_over_tcp.h"
 #include "dsp/fh_venc_mpi.h"
 #include "isp/isp_enum.h"
 #include "sample_opts.h"
 #include "vpss_assistant.h"
+
+#ifndef RT_USING_FINSH
+#include "libvlcview.h"
+#endif
 
 
 #define CHANNEL_COUNT 1

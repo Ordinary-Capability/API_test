@@ -1,48 +1,39 @@
-include ../Rules.make
-
-ifeq ($(DEBUG),0)
-  CFLAGS 	+= -O2
-else
-  CFLAGS 	+= -O0 -g3
-endif
-
-LIBS = -ladvapi -ldbi -ldci -ldsp -lisp -lispcore  -lvmm -ljxf22_mipi -lpthread -lvlcview -lmipi -lrt -lgtest
 
 UNITY_ROOT = ../Unity
 RUBY = ruby $(UNITY_ROOT)/auto/generate_test_runner.rb
 
-test_origin_c = isp.c
+test_origin_c = src/isp_api_test.c
+
 test_runner_c = $(test_origin_c:%.c=%_runner.c)
 
-BIN = API_isp
+all: $(test_runner_c) build_bin
 
-SRCS = $(wildcard *.c)
-SRCS += $(wildcard ../*.c)
-SRCS += $(wildcard ../Unity/src/*.c)
-OBJS	= $(SRCS:%.c=%.o)  
-DEPENDS	= $(subst .o,.d,$(OBJS))
+%_runner.c: %.c 
+	$(RUBY) "$<" "$@" 
 
-all: $(test_runner_c) $(BIN) 
+build_bin:
+	@scons -j16 --buildlib=libkernel
+	@scons -j16 --buildlib=libdriver
+	@scons -j16
 
-%_runner.c: %.c
-	$(RUBY) "$<" "$@"
 
-$(BIN): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS) $(LIBS)
 
+menuconfig:
+	@scons --menuconfig
 
 clean:
-	rm -f $(BIN)
-	rm -f *.o *.d ../*.o ../*.d
-	rm -f ../common/*.o ../common/*.d
+	@scons -c
+	@rm -rf build
+	@rm -f rtthread.elf rtthread.bin rtthread.map rtthread.dis rtthread.s
+	@rm -f rtt_stage[12].img
+	@rm -f lib*_gcc.a
 
-ifneq "$(MAKECMDGOALS)" "clean"
-  -include $(DEPENDS)
-endif
+distclean: clean
+	@rm -f rtconfig_kernel.h
+	@rm -f rtconfig_driver.h
+	@rm -f rtconfig_platform.h
+	@rm -f .config
+	@rm -f flash.img
 
-%.o: %.c
-	#$(CC) $(CFLAGS) -c -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
-	$(CC) $(CFLAGS) -c -o "$@" "$<"
-
-
-.PHONY: clean
+%_defconfig:
+	@scons --defconfig=$@

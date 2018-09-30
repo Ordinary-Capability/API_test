@@ -1,0 +1,26 @@
+Import('rtconfig')
+import os
+from building import *
+
+Import('SDK_ROOT')
+Import('RTT_PLATFORM_ROOT')
+
+API_TEST_DIR = os.path.join(SDK_ROOT, "../../app/API_test")
+DEMO_DIR = os.path.join(SDK_ROOT, "../../app/demo")
+
+path_inc = [API_TEST_DIR]
+path_inc.append(["../Unity/src"])
+path_inc.append("isp/common")
+path_inc.append(os.path.join(API_TEST_DIR,"isp/common/inc"))
+path_inc.append(os.path.join(SDK_ROOT, "extlib/inc"))
+path_inc.append(os.path.join(SDK_ROOT, "extlib/advapi"))
+path_inc.append(os.path.join(SDK_ROOT, "components"))
+
+print (path_inc)
+src	= Glob('*.c')
+src.append(os.path.join(API_TEST_DIR, "Unity/src/unity.c"))
+src.append(os.path.join(API_TEST_DIR, "vpss_assistant.c"))
+group = DefineGroup('hello', src, depend = ['RT_USING_HELLOWORLD'], LOCAL_CPPPATH = path_inc)
+
+
+Return('group')

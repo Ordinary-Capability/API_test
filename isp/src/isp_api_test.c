@@ -6,7 +6,7 @@
 #include "isp/isp_enum.h"
 #include "isp/isp_func_def.h"
 #include "dsp/fh_common.h"
-#include "dsp_ext/FHAdv_Isp_mpi.h"
+#include "FHAdv_Isp_mpi.h"
 #include "sample_opts.h"
 #include "vpss_assistant.h"
 
