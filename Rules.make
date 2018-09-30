@@ -3,6 +3,8 @@ STATIC ?= 1
 
 SAMPLE_TOP_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
+#$(info $(SAMPLE_TOP_DIR))
+
 CROSS_COMPILE ?= arm-fullhan-linux-uclibcgnueabi-
 CC := $(CROSS_COMPILE)g++
 
@@ -16,7 +18,8 @@ else
 SDK_LIB_DIR = $(LIB_PATH)/dynamic
 endif
 
-INCLUDES =  -I../Unity/src -I$(SDK_INC_DIR) -I$(SAMPLE_TOP_DIR) -I$(SAMPLE_TOP_DIR)/include -I$(SAMPLE_COMMON_INC_DIR) -I$(SDK_INC_DIR_GTEST)
+INCLUDES =  -I$(SAMPLE_TOP_DIR)/Unity/src -I$(SDK_INC_DIR) -I$(SAMPLE_TOP_DIR) -I$(SAMPLE_COMMON_INC_DIR) 
+INCLUDES += -I$(SDK_INC_DIR)/dsp_ext
 
 CFLAGS = -Wall -fpermissive $(INCLUDES)
 #CFLAGS = -Wall $(INCLUDES)

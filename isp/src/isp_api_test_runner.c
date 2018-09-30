@@ -71,17 +71,11 @@ void resetTest(void)
 
 
 /*=======MAIN=====*/
- int isp_api_test(void);
-int isp_api_test(void)
+int main(void)
 {
   suite_setup();
-  UnityBegin("src/isp_api_test.c");
+  UnityBegin("isp_api_test.c");
   RUN_TEST(test_isp_basic, 43);
 
   return suite_teardown(UnityEnd());
 }
-#ifdef RT_USING_FINSH
-#include <finsh.h>
-FINSH_FUNCTION_EXPORT(isp_api_test, isp_api_test());
-#endif
-
