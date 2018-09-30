@@ -8,7 +8,7 @@ endif
 
 LIBS = -ladvapi -ldbi -ldci -ldsp -lisp -lispcore  -lvmm -ljxf22_mipi -lpthread -lvlcview -lmipi -lrt -lgtest
 
-UNITY_ROOT = ../Unity
+UNITY_ROOT = ../../Unity
 RUBY = ruby $(UNITY_ROOT)/auto/generate_test_runner.rb
 
 test_origin_c = isp_api_test.c
@@ -17,8 +17,8 @@ test_runner_c = $(test_origin_c:%.c=%_runner.c)
 BIN = API_isp
 
 SRCS = $(wildcard *.c)
-SRCS += $(wildcard ../*.c)
-SRCS += $(wildcard ../Unity/src/*.c)
+SRCS += $(wildcard ../../*.c)
+SRCS += $(wildcard ../../Unity/src/*.c)
 OBJS	= $(SRCS:%.c=%.o)  
 DEPENDS	= $(subst .o,.d,$(OBJS))
 
