@@ -37,8 +37,8 @@ struct channel_info
 static FH_BOOL g_stop_running = FH_FALSE;
 static pthread_t g_thread_isp = 0;
 static pthread_t g_thread_stream  = 0;
-static pthread_t g_thread_dbi = 0;
-static struct dbi_tcp_config g_tcp_conf;
+//static pthread_t g_thread_dbi = 0;
+//static struct dbi_tcp_config g_tcp_conf;
 
 
 void sample_vlcview_exit(void)
@@ -125,12 +125,12 @@ void stop_vpss_assistant()
 }
 
 //int main(int argc, char const *argv[])
-void vpss_assistant()
+void * vpss_assistant(void *)
 {
     FH_VPU_SIZE vi_pic;
     FH_VPU_CHN_CONFIG chn_attr;
-    FH_VENC_CHN_CAP cfg_vencmem;
-    FH_VENC_CHN_CONFIG cfg_param;
+    //FH_VENC_CHN_CAP cfg_vencmem;
+    //FH_VENC_CHN_CONFIG cfg_param;
     FH_SINT32 ret;
     FH_SINT32 i;
 
@@ -346,7 +346,7 @@ err_exit:
 //    sample_vlcview_exit();
 //    vlcview_pes_uninit();
 
-    return;
+    return NULL;
 }
 
 void start_vpss_assistant()
