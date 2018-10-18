@@ -24,7 +24,8 @@ BIN = $(test_origin_c:%.c=%.bin)
 SRCS = $(wildcard ../../*.c)
 #SRCS += $(wildcard ../../Unity/src/*.c)
 OBJS	= $(SRCS:%.c=%.o)  
-OBJ_UNITY = $(wildcard ../../Unity/src/*.o)
+SRC_UNITY = $(wildcard ../../Unity/src/*.c)
+OBJ_UNITY = $(SRC_UNITY:%.c=%.o)
 
 #DEPENDS	= $(subst .o,.d,$(OBJS))
 

@@ -125,7 +125,7 @@ void stop_vpss_assistant()
 }
 
 //int main(int argc, char const *argv[])
-void * vpss_assistant(void *)
+void * vpss_assist()
 {
     FH_VPU_SIZE vi_pic;
     FH_VPU_CHN_CONFIG chn_attr;
@@ -354,5 +354,5 @@ void start_vpss_assistant()
     g_stop_running = FH_FALSE;
     pthread_t vpss_thread = 0;
 
-    pthread_create(&vpss_thread, NULL, vpss_assistant, NULL);
+    pthread_create(&vpss_thread, NULL, vpss_assist, NULL);
 }

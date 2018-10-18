@@ -75,7 +75,7 @@ void test_isp_basic(void)
 }
 
 
-
+/*
 void test_isp_pause_and_resume(void)
 {
     TEST_ASSERT_EQUAL_INT(FH_RET_OK, API_ISP_MemInit(1920, 1080));
@@ -100,7 +100,8 @@ void test_isp_pause_and_resume(void)
     fclose(param_file);
     TEST_ASSERT_EQUAL_INT(0, API_ISP_LoadIspParam(isp_param_buff));
 
-    for(int i = 0; i<1; i++){
+    int i = 0;
+    for(i = 0; i<1; i++){
         printf("ISP pause and resume loop %d...\n", i);
         TEST_ASSERT_EQUAL_INT(0, API_ISP_Run());
         TEST_ASSERT_EQUAL_INT(0, API_ISP_Pause());
@@ -109,5 +110,5 @@ void test_isp_pause_and_resume(void)
     }
     TEST_ASSERT_EQUAL_INT(0, API_ISP_Run());
     TEST_ASSERT_EQUAL_INT(0, API_ISP_Exit());
-}
+}*/
 
