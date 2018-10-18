@@ -6,7 +6,7 @@ SAMPLE_TOP_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 #$(info $(SAMPLE_TOP_DIR))
 
 CROSS_COMPILE ?= arm-fullhan-linux-uclibcgnueabi-
-CC := $(CROSS_COMPILE)g++
+CC := $(CROSS_COMPILE)gcc
 
 SDK_INC_DIR = $(SAMPLE_TOP_DIR)/../include
 SAMPLE_COMMON_INC_DIR = $(SAMPLE_TOP_DIR)/../demo/common
@@ -21,7 +21,7 @@ endif
 INCLUDES =  -I$(SAMPLE_TOP_DIR)/Unity/src -I$(SDK_INC_DIR) -I$(SAMPLE_TOP_DIR) -I$(SAMPLE_COMMON_INC_DIR) 
 INCLUDES += -I$(SDK_INC_DIR)/dsp_ext
 
-CFLAGS = -Wall -fpermissive $(INCLUDES)
+CFLAGS = -Wall $(INCLUDES)
 #CFLAGS = -Wall $(INCLUDES)
 LDFLAGS = -L$(SDK_LIB_DIR) -L$(SAMPLE_TOP_DIR)/lib
 SDK_LIBS = -ldbi -ldci -ldsp -lisp -lispcore -ladvapi -lvmm
