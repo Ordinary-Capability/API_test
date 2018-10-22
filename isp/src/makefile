@@ -12,7 +12,8 @@ UNITY_ROOT = ../../Unity
 RUBY = ruby $(UNITY_ROOT)/auto/generate_test_runner.rb
 
 test_origin_c = isp_api_test.c
-test_origin_c += isp_api_test2.c
+#test_origin_c += isp_api_test2.c
+#test_origin_c += isp_api_test3.c
 
 test_runner_c = $(test_origin_c:%.c=%_runner.c)
 

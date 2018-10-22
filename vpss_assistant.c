@@ -122,6 +122,7 @@ void usage(char *program_name)
 void stop_vpss_assistant()
 {
     g_stop_running = FH_TRUE;
+    usleep(10000000);
 }
 
 //int main(int argc, char const *argv[])
@@ -338,14 +339,15 @@ void * vpss_assist()
     /******************************************
      step  14: exit process
     ******************************************/
-    printf("VPSS assistant start successfullt.\n");
+    printf("VPSS start successfully.\n");
     while (!g_stop_running){
-        usleep(1000000);
+        usleep(100000);
     }
 err_exit:
 //    sample_vlcview_exit();
 //    vlcview_pes_uninit();
-
+    FH_SYS_Exit();
+    printf("VPSS exit successfully.\n");
     return NULL;
 }
 
@@ -355,4 +357,5 @@ void start_vpss_assistant()
     pthread_t vpss_thread = 0;
 
     pthread_create(&vpss_thread, NULL, vpss_assist, NULL);
+    usleep(5000000);
 }

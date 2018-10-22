@@ -26,13 +26,13 @@ FHADV_ISP_SENSOR_INFO_t g_sensor_infos[] = {
 
 void setUp(void)
 {
-    printf("Test setup...");
+    printf("Test setup...\n");
     start_vpss_assistant();
     }
 
 void tearDown(void)
 {
-    printf("Test teardown...");
+    printf("\nTest teardown...\n");
     stop_vpss_assistant();
     }
 
@@ -43,16 +43,17 @@ void get_isp_sensor_info(FHADV_ISP_SENSOR_INFO_t **info, int *len)
 }
 
 
+
+
+/*
 void test_isp_basic(void)
 {
+    TEST_IGNORE();
     TEST_ASSERT_EQUAL_INT(FH_RET_OK, API_ISP_MemInit(1920, 1080));
     FH_UINT32 u32BinAddr, u32BinSize;
-
     TEST_ASSERT_EQUAL_INT(FH_RET_OK, API_ISP_GetBinAddr(&u32BinAddr, &u32BinSize));
-
     FHADV_ISP_SENSOR_PROBE_INFO_t sensor_probe;
     FHADV_ISP_SENSOR_INFO_t probed_sensor;
-
     get_isp_sensor_info(&sensor_probe.sensor_infos, &sensor_probe.sensor_num);
     TEST_ASSERT_EQUAL_INT(0, FHAdv_Isp_SensorInit(&sensor_probe, &probed_sensor));
 	TEST_ASSERT_EQUAL_INT(0, API_ISP_SensorRegCb(0, (struct isp_sensor_if*)probed_sensor.sensor_handle));
@@ -74,10 +75,34 @@ void test_isp_basic(void)
     TEST_ASSERT_EQUAL_INT(0, API_ISP_Exit());
 }
 
+void test_isp_getversion(void)
+{
+    TEST_IGNORE();
+    ISP_VERSION IspVer;
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_GetVersion(&IspVer));
+    printf("%d.%d.%u.%s\n", &IspVer.u32SdkVer, IspVer.FH_UINT32ChipVer, IspVer.u08SdkSubVer, IspVer.u08BuildTime);
+    }
 
-/*
+void test_isp_sensorRegAndUnreg(void)
+{
+    TEST_IGNORE();
+    TEST_ASSERT_EQUAL_INT(FH_RET_OK, API_ISP_MemInit(1920, 1080));
+    FH_UINT32 u32BinAddr, u32BinSize;
+    TEST_ASSERT_EQUAL_INT(FH_RET_OK, API_ISP_GetBinAddr(&u32BinAddr, &u32BinSize));
+    FHADV_ISP_SENSOR_PROBE_INFO_t sensor_probe;
+    FHADV_ISP_SENSOR_INFO_t probed_sensor;
+    get_isp_sensor_info(&sensor_probe.sensor_infos, &sensor_probe.sensor_num);
+    TEST_ASSERT_EQUAL_INT(0, FHAdv_Isp_SensorInit(&sensor_probe, &probed_sensor));
+	TEST_ASSERT_EQUAL_INT(0, API_ISP_SensorRegCb(0, (struct isp_sensor_if*)probed_sensor.sensor_handle));
+    TEST_ASSERT_NOT_NULL(probed_sensor.funcs.sensor_create);
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_SensorUnRegCb(0));
+    TEST_ASSERT_NULL(probed_sensor.funcs.sensor_create);
+    }
+
+
 void test_isp_pause_and_resume(void)
 {
+    TEST_IGNORE();
     TEST_ASSERT_EQUAL_INT(FH_RET_OK, API_ISP_MemInit(1920, 1080));
     FH_UINT32 u32BinAddr, u32BinSize;
 
@@ -110,5 +135,136 @@ void test_isp_pause_and_resume(void)
     }
     TEST_ASSERT_EQUAL_INT(0, API_ISP_Run());
     TEST_ASSERT_EQUAL_INT(0, API_ISP_Exit());
-}*/
+}
+void test_isp_ViAttr(void)
+{
+    TEST_IGNORE();
+    FH_UINT32 u32BinAddr, u32BinSize;
+    FH_UINT16 u16Tmp = 1600;
+    ISP_VI_ATTR_S stViAttr;
+    FHADV_ISP_SENSOR_PROBE_INFO_t sensor_probe;
+    FHADV_ISP_SENSOR_INFO_t probed_sensor;
+    
+    TEST_ASSERT_EQUAL_INT(FH_RET_OK, API_ISP_MemInit(1920, 1080));
+    TEST_ASSERT_EQUAL_INT(FH_RET_OK, API_ISP_GetBinAddr(&u32BinAddr, &u32BinSize));
+    get_isp_sensor_info(&sensor_probe.sensor_infos, &sensor_probe.sensor_num);
+    TEST_ASSERT_EQUAL_INT(0, FHAdv_Isp_SensorInit(&sensor_probe, &probed_sensor));
+	TEST_ASSERT_EQUAL_INT(0, API_ISP_SensorRegCb(0, (struct isp_sensor_if*)probed_sensor.sensor_handle));
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_SensorInit());
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_SetSensorFmt(ISP_FORMAT));
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_Init());
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_GetViAttr(&stViAttr));
+    stViAttr.u16PicWidth = u16Tmp;
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_SetViAttr(&stViAttr));
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_GetViAttr(&stViAttr));
+    TEST_ASSERT_EQUAL_INT(u16Tmp, stViAttr.u16PicWidth);
+    }
+*/
+/*
+int isp_init(void)
+{
+    FH_UINT32 u32BinAddr, u32BinSize;
+    ISP_VI_ATTR_S stViAttr;
+    FHADV_ISP_SENSOR_PROBE_INFO_t sensor_probe;
+    FHADV_ISP_SENSOR_INFO_t probed_sensor;
+    
+    TEST_ASSERT_EQUAL_INT(FH_RET_OK, API_ISP_MemInit(1920, 1080));
+    TEST_ASSERT_EQUAL_INT(FH_RET_OK, API_ISP_GetBinAddr(&u32BinAddr, &u32BinSize));
+    get_isp_sensor_info(&sensor_probe.sensor_infos, &sensor_probe.sensor_num);
+    TEST_ASSERT_EQUAL_INT(0, FHAdv_Isp_SensorInit(&sensor_probe, &probed_sensor));
+	TEST_ASSERT_EQUAL_INT(0, API_ISP_SensorRegCb(0, (struct isp_sensor_if*)probed_sensor.sensor_handle));
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_SensorInit());
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_SetSensorFmt(ISP_FORMAT));
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_Init());
+    return 0;
+    }
+*/
+/*
+void test_isp_DetectPicSize(void)
+{
+   
+    TEST_IGNORE();
+    //TEST_ASSERT_EQUAL_INT(0, isp_init());
 
+    //TEST_ASSERT_EQUAL_INT(0, API_ISP_DetectPicSize());
+    FH_UINT32 u32BinAddr, u32BinSize;
+    ISP_VI_ATTR_S stViAttr;
+    FHADV_ISP_SENSOR_PROBE_INFO_t sensor_probe;
+    FHADV_ISP_SENSOR_INFO_t probed_sensor;
+    
+    TEST_ASSERT_EQUAL_INT(FH_RET_OK, API_ISP_MemInit(1920, 1080));
+    TEST_ASSERT_EQUAL_INT(FH_RET_OK, API_ISP_GetBinAddr(&u32BinAddr, &u32BinSize));
+    get_isp_sensor_info(&sensor_probe.sensor_infos, &sensor_probe.sensor_num);
+    TEST_ASSERT_EQUAL_INT(0, FHAdv_Isp_SensorInit(&sensor_probe, &probed_sensor));
+	TEST_ASSERT_EQUAL_INT(0, API_ISP_SensorRegCb(0, (struct isp_sensor_if*)probed_sensor.sensor_handle));
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_SensorInit());
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_SetSensorFmt(ISP_FORMAT));
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_Init());
+    }
+
+void test_isp_basic2(void)
+{
+    TEST_ASSERT_EQUAL_INT(FH_RET_OK, API_ISP_MemInit(1920, 1080));
+    FH_UINT32 u32BinAddr, u32BinSize;
+    TEST_ASSERT_EQUAL_INT(FH_RET_OK, API_ISP_GetBinAddr(&u32BinAddr, &u32BinSize));
+    FHADV_ISP_SENSOR_PROBE_INFO_t sensor_probe;
+    FHADV_ISP_SENSOR_INFO_t probed_sensor;
+    get_isp_sensor_info(&sensor_probe.sensor_infos, &sensor_probe.sensor_num);
+    TEST_ASSERT_EQUAL_INT(0, FHAdv_Isp_SensorInit(&sensor_probe, &probed_sensor));
+	TEST_ASSERT_EQUAL_INT(0, API_ISP_SensorRegCb(0, (struct isp_sensor_if*)probed_sensor.sensor_handle));
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_SensorInit());
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_SetSensorFmt(ISP_FORMAT));
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_Init());
+    FILE *param_file;
+    FH_SINT8 isp_param_buff[u32BinSize];
+    param_file = fopen("jxf22_mipi_attr.hex", "rb");
+    TEST_ASSERT_NOT_NULL(param_file);
+    fread(isp_param_buff, 1, u32BinSize, param_file);
+    fclose(param_file);
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_LoadIspParam(isp_param_buff));
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_Run());
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_Pause());
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_Resume());
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_KickStart());
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_Run());
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_Exit());
+}
+*/
+
+
+void test_sample(void)
+{
+    
+    TEST_IGNORE();
+    printf("test sample.\n");
+    }
+void test_sample2(void)
+{
+    
+    TEST_IGNORE_MESSAGE("IGNORE.");
+    printf("test sample.\n");
+    }
+void test_sample3(void)
+{
+    
+    TEST_IGNORE();
+    printf("test sample.\n");
+    }
+void test_sample4(void)
+{
+    
+    TEST_IGNORE();
+    printf("test sample.\n");
+    }
+void test_sample5(void)
+{
+    
+    TEST_IGNORE();
+    printf("test sample.\n");
+    }
+void test_sample6(void)
+{
+    
+    TEST_IGNORE();
+    printf("test sample.\n");
+    }
