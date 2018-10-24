@@ -36,6 +36,7 @@ void tearDown(void)
     printf("\nTest teardown...\n");
     stop_vpss_assistant();
     }
+*/
 void suiteSetUp(void)
 {
     
@@ -49,7 +50,6 @@ int suiteTearDown(int num_failures)
     stop_vpss_assistant();
     return num_failures;
     }
-*/
 
 void get_isp_sensor_info(FHADV_ISP_SENSOR_INFO_t **info, int *len)
 {
@@ -79,7 +79,8 @@ int isp_init(void)
 
 void test_isp_basic(void)
 {
-//    TEST_IGNORE();
+    //TEST_IGNORE();
+    TEST_ASSERT_EQUAL_INT(FH_RET_OK, API_ISP_MemInit(1920, 1080));
     TEST_ASSERT_EQUAL_INT(FH_RET_OK, API_ISP_MemInit(1920, 1080));
     FH_UINT32 u32BinAddr, u32BinSize;
     TEST_ASSERT_EQUAL_INT(FH_RET_OK, API_ISP_GetBinAddr(&u32BinAddr, &u32BinSize));
@@ -91,7 +92,7 @@ void test_isp_basic(void)
     TEST_ASSERT_EQUAL_INT(0, API_ISP_SensorInit());
     TEST_ASSERT_EQUAL_INT(0, API_ISP_SetSensorFmt(ISP_FORMAT));
     TEST_ASSERT_EQUAL_INT(0, API_ISP_Init());
-    TEST_ASSERT_EQUAL_INT(0, API_ISP_Init());
+    API_ISP_Init();
     FILE *param_file;
     FH_SINT8 isp_param_buff[u32BinSize];
     param_file = fopen("jxf22_mipi_attr.hex", "rb");
@@ -217,7 +218,94 @@ void test_setHWmoduleCfg(void)
     //printf("modulecfg: 0x%x\n", u32modulecfg_out);
     }
 
+
+void test_GetAlgCfg(void)
+{
+   FH_UINT32 u32Algcfg;
+   TEST_ASSERT_EQUAL_INT(0, isp_init());
+   TEST_ASSERT_EQUAL_INT(0, API_ISP_GetAlgCtrl(&u32Algcfg));
+   printf("Algcfg: 0x%x\n", u32Algcfg);
+    }
+
+
+void test_SetAlgCfg(void)
+{
+   FH_UINT32 u32Algcfg_in = 0x0;//0xffffffff;//0x3fffb03;  
+   FH_UINT32 u32Algcfg_out;
+   TEST_ASSERT_EQUAL_INT(0, isp_init());
+   TEST_ASSERT_EQUAL_INT(0, API_ISP_SetAlgCtrl(u32Algcfg_in));
+   TEST_ASSERT_EQUAL_INT(0, API_ISP_GetAlgCtrl(&u32Algcfg_out));
+   printf("Algcfg: 0x%x\n", u32Algcfg_out);
+    }
+
+void test_IspReg(void)
+{
+    TEST_IGNORE();
+    FH_UINT32 u32RegAddr = 0xEA2010c;
+    FH_UINT32 u32RegData = 0;
+    TEST_ASSERT_EQUAL_INT(0, isp_init());
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_GetIspReg(u32RegAddr, &u32RegData));
+    printf("RegData: 0x%x\n", u32RegData);
+    }
 */
+void test_greenBalance(void)
+{
+    TEST_IGNORE();
+    ISP_GB_CFG stGbCfg;
+    //TEST_ASSERT_EQUAL_INT(0, isp_init());
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_GetGbCfg(&stGbCfg));
+    printf("GbCfg: 0x%x, 0x%x\n", stGbCfg.u16Th, stGbCfg.u16Tl);
+    stGbCfg.u16Th = 1;
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_SetGbCfg(&stGbCfg));
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_GetGbCfg(&stGbCfg));
+    printf("GbCfg: 0x%x, 0x%x\n", stGbCfg.u16Th, stGbCfg.u16Tl);
+    TEST_ASSERT_EQUAL_INT(0, isp_init());
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_GetGbCfg(&stGbCfg));
+    printf("GbCfg: 0x%x, 0x%x\n", stGbCfg.u16Th, stGbCfg.u16Tl);
+    }
+
+void test_rgetViState(void)
+{
+    TEST_IGNORE();
+    ISP_VI_STAT_S stStat;
+    TEST_ASSERT_EQUAL_INT(0, isp_init());
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_GetVIState(&stStat));
+    printf("u32FrmRate: %d\n", stStat.u32FrmRate);
+    printf("u32PicWidth: %d\n", stStat.u32PicWidth);
+    }
+
+void test_aeEnable(void)
+{
+    TEST_IGNORE();
+    TEST_ASSERT_EQUAL_INT(0, isp_init());
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_AEAlgEn(0));
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_AEAlgEn(1));
+    }
+
+void test_WdrCfg(void)
+{
+    TEST_IGNORE();
+    ISP_WDR_CFG stWdrCfg;
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_GetWdrCfg(&stWdrCfg));
+    printf("Wdr cfg: %d, %d \n", stWdrCfg.bWdrEn, stWdrCfg.u08ExposureRatio);
+    stWdrCfg.bWdrEn = 1;
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_SetWdrCfg(&stWdrCfg));
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_GetWdrCfg(&stWdrCfg));
+    printf("Wdr cfg: %d, %d \n", stWdrCfg.bWdrEn, stWdrCfg.u08ExposureRatio);
+    }
+
+void test_hlrCfg(void)
+{
+    TEST_IGNORE();
+    ISP_HLR_CFG stHlrCfg;
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_GetLtmCfg(&stHlrCfg));
+    printf("HLR CFG: %d, %d \n", stHlrCfg.bHlrEn, stHlrCfg.s08Level);
+    stHlrCfg.s08Level = 2;
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_SetLtmCfg(&stHlrCfg));
+    TEST_ASSERT_EQUAL_INT(0, API_ISP_GetLtmCfg(&stHlrCfg));
+    printf("HLR CFG: %d, %d \n", stHlrCfg.bHlrEn, stHlrCfg.s08Level);
+    }
+
 /*
 void test_sample1(void)
 {
