@@ -79,7 +79,7 @@ int isp_init(void)
 
 void test_isp_basic(void)
 {
-    //TEST_IGNORE();
+    TEST_IGNORE();
     TEST_ASSERT_EQUAL_INT(FH_RET_OK, API_ISP_MemInit(1920, 1080));
     TEST_ASSERT_EQUAL_INT(FH_RET_OK, API_ISP_MemInit(1920, 1080));
     FH_UINT32 u32BinAddr, u32BinSize;
@@ -108,10 +108,9 @@ void test_isp_basic(void)
     TEST_ASSERT_EQUAL_INT(0, API_ISP_Exit());
 }
 
-/*
+
 void test_isp_getversion(void)
 {
-    TEST_IGNORE();
     ISP_VERSION IspVer;
     TEST_ASSERT_EQUAL_INT(0, API_ISP_GetVersion(&IspVer));
     printf("%d.%d.%u.%s\n", &IspVer.u32SdkVer, IspVer.FH_UINT32ChipVer, IspVer.u08SdkSubVer, IspVer.u08BuildTime);
@@ -203,6 +202,7 @@ void test_isp_DetectPicSize(void)
 
 void test_getHWmoduleCfg(void)
 {
+    TEST_IGNORE();
     FH_UINT32 u32modulecfg;
     TEST_ASSERT_EQUAL_INT(0, isp_init());
     TEST_ASSERT_EQUAL_INT(0, API_ISP_Get_HWmodule_cfg(&u32modulecfg));
@@ -210,6 +210,7 @@ void test_getHWmoduleCfg(void)
     }
 void test_setHWmoduleCfg(void)
 {
+    TEST_IGNORE();
     FH_UINT32 u32modulecfg = 0x605c;
     FH_UINT32 u32modulecfg_out;
     TEST_ASSERT_EQUAL_INT(0, isp_init());
@@ -221,6 +222,7 @@ void test_setHWmoduleCfg(void)
 
 void test_GetAlgCfg(void)
 {
+    TEST_IGNORE();
    FH_UINT32 u32Algcfg;
    TEST_ASSERT_EQUAL_INT(0, isp_init());
    TEST_ASSERT_EQUAL_INT(0, API_ISP_GetAlgCtrl(&u32Algcfg));
@@ -230,6 +232,7 @@ void test_GetAlgCfg(void)
 
 void test_SetAlgCfg(void)
 {
+    TEST_IGNORE();
    FH_UINT32 u32Algcfg_in = 0x0;//0xffffffff;//0x3fffb03;  
    FH_UINT32 u32Algcfg_out;
    TEST_ASSERT_EQUAL_INT(0, isp_init());
@@ -247,7 +250,7 @@ void test_IspReg(void)
     TEST_ASSERT_EQUAL_INT(0, API_ISP_GetIspReg(u32RegAddr, &u32RegData));
     printf("RegData: 0x%x\n", u32RegData);
     }
-*/
+
 void test_greenBalance(void)
 {
     TEST_IGNORE();

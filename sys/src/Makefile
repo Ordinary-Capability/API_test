@@ -6,12 +6,11 @@ else
   CFLAGS 	+= -O0 -g3
 endif
 
-LIBS = -ladvapi -ldbi -ldci -ldsp -lisp -lispcore  -lvmm -ljxf22_mipi -lpthread -lvlcview -lmipi -lrt -lm
-
 UNITY_ROOT = ../../Unity
 RUBY = ruby $(UNITY_ROOT)/auto/generate_test_runner.rb
+LIBS = -ladvapi -ldbi -ldci -ldsp -lisp -lispcore  -lvmm -ljxf22_mipi -lpthread -lvlcview -lmipi -lrt -lm
 
-test_origin_c = isp_api_test.c
+test_origin_c = sys_api_test.c
 
 test_runner_c = $(test_origin_c:%.c=%_runner.c)
 
