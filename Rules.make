@@ -23,7 +23,8 @@ INCLUDES += -I$(SDK_INC_DIR)/dsp_ext
 
 CFLAGS = -Wall $(INCLUDES)
 #CFLAGS = -Wall $(INCLUDES)
-LDFLAGS = -L$(SDK_LIB_DIR) -L$(SAMPLE_TOP_DIR)/lib
+#LDFLAGS = -L$(SDK_LIB_DIR) -L$(SAMPLE_TOP_DIR)/lib
+LDFLAGS = -L$(SDK_LIB_DIR) 
 SDK_LIBS = -ldbi -ldci -ldsp -lisp -lispcore -ladvapi -lvmm
 
 INSTALL_DIR ?= $(SAMPLE_TOP_DIR)/bin
